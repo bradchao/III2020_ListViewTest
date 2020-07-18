@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
     private SimpleAdapter adapter;
     private LinkedList<HashMap<String,String>> data;
-    private String[] from = {"title"};
-    private int[] to = {R.id.item_title};
+    private String[] from = {"title","feature"};
+    private int[] to = {R.id.item_title, R.id.item_feature};
 
     private void initListView(){
         data = new LinkedList<>();
@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject row = root.getJSONObject(i);
                 HashMap<String, String> gift = new HashMap<>();
                 gift.put(from[0], row.getString("Name"));
+                gift.put(from[1], row.getString("Feature"));
                 data.add(gift);
             }
             adapter.notifyDataSetChanged();
