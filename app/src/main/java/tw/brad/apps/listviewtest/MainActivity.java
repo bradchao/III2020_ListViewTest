@@ -13,6 +13,9 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -51,11 +54,30 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.v("bradlog", response);
+                        parseData(response);
                     }
                 },
                 null);
         queue.add(request);
     }
+
+    private void parseData(String json){
+        try {
+            JSONArray root = new JSONArray(json);
+            for (int i=0; i<root.length(); i++){
+                JSONObject row = root.getJSONObject(i);
+                HashMap<String, String> gift = new HashMap<>();
+                gift.put(from[0], row.getString("Name"));
+                data.add(gift);
+            }
+            adapter.notifyDataSetChanged();
+
+
+        }catch (Exception e){
+            //
+            Log.v("bradlog", e.toString());
+        }
+    }
+
 
 }
